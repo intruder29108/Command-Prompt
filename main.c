@@ -13,7 +13,9 @@
  #include "historystack.h"
  #include "cli.h"
  
+ /* Reference to global message structure */
  extern PMSG g_pmsg;
+ /* Reference to history stack strucuture */
  extern HIST_STACK g_histstack;
 
  /*
@@ -30,7 +32,6 @@
   	/* Initialize history stack */
   	if(stack_initialize(&g_histstack) != STACK_SUCCESS)
   	{
-  		printf("Error : Stack Initialization !!!\n");
   		return -1;
   	}
 

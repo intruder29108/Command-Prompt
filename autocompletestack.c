@@ -9,7 +9,6 @@
 
  /* Standard Library Includes goes here */
  #include <string.h>
- #include <stdio.h>
 
  /* Project Includes Goes here */
  #include "utils.h"
@@ -81,7 +80,7 @@
 
    /*
     *	Name		:	findMatch
-    *	Description	:	Find commands matching search strin
+    *	Description	:	Find commands matching search string
     *					from command table
     *
     *	In			: 	AUTOCOMPL_STRUCT autoComplStruct, char *searchStr, CMD_TABLE *cmdTable, int cmdTableSize

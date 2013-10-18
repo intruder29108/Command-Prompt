@@ -17,10 +17,11 @@
 
 /* Command Table Definition */
 CMD_TABLE cmdTable[] = {
-	{"help",	help ,	0,	"help"},
-	{"echo",	echo,	1,	"echo <string>"},
-	{"add",		add ,	2,	"add  <num1> <num2>"},
-	{"exit",	myexit, 0,	"exit"}
+	{"help",	help ,		0,	"help"},
+	{"echo",	echo,		1,	"echo <string>"},
+	{"add",		add ,		2,	"add  <num1> <num2>"},
+	{"history", history,	0,  "history"},
+	{"exit",	myexit, 	0,	"exit"}
 };
 
 /* Global Variable goes here */
@@ -57,6 +58,7 @@ funcPtr InitState(void *msg)
  	/* Initialize message structure */
 	memset(pmsg, 0, sizeof(PMSG));
 	pmsg->parse_state = OUTSIDE_WORD;
+	pmsg->left_right_state = LEFT_RIGHT_IDLE;
 
 	/* Initialize access index for history stack */
 	g_histstack.accessIndex = STACK_HEAD;
@@ -76,6 +78,7 @@ funcPtr InputState(void *msg)
 	int ch;
  	static int len = 0;		/**< Keep track of command buffer length */
  	int iVal;
+ 	int cmdBufLen = 0;			/**< Cache string length */
 
 	/* Catch Null Pointer Exception */
  	if(pmsg == NULL)
@@ -138,7 +141,28 @@ funcPtr InputState(void *msg)
  				len = mystrlen(pmsg->cmdBuff);
  				printf("%s", pmsg->cmdBuff);
  			}
- 
+ 		}
+ 		else if(ch == LEFT)
+ 		{
+ 			if(len > 0)
+ 			{
+ 				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
+ 				putchar(BACKSPACE);
+ 				len--;
+ 			}
+ 			
+ 		}
+ 		else if(ch == RIGHT)
+ 		{
+ 			if(len < mystrlen(pmsg->cmdBuff))
+ 			{
+ 				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
+ 				putchar(pmsg->cmdBuff[len++]);
+ 			}
+ 			else
+ 			{
+ 				pmsg->left_right_state = LEFT_RIGHT_IDLE;
+ 			}
  		}
 
  	}
@@ -166,6 +190,11 @@ funcPtr InputState(void *msg)
  	{
  		if(len <= MAX_CMD_BUFFER_SIZE)
  		{
+ 			/* If LEFT/RIGHT active in middle of word, take entire word */
+ 			if(pmsg->left_right_state == LEFT_RIGHT_ACTIVE)
+ 			{
+ 				len = mystrlen(pmsg->cmdBuff);
+ 			}
  			pmsg->cmdBuff[len] = EOS;
  			putchar(ch);
  			len = 0;
@@ -184,11 +213,30 @@ funcPtr InputState(void *msg)
  		if(len)
  		{
  			len--;
- 			pmsg->cmdBuff[len] = EOS;
- 			putchar(BACKSPACE);
- 			putchar(SPACE);
- 			putchar(BACKSPACE);
+ 			/* Terminate string only if not in middle of word */
+ 			if(pmsg->left_right_state == LEFT_RIGHT_IDLE)
+ 			{
+ 				pmsg->cmdBuff[len] = EOS;				
+ 				putchar(BACKSPACE);
+ 				putchar(SPACE);
+ 				putchar(BACKSPACE);
 
+ 			}
+ 			/* Shift entire command buffer to left once */
+ 			else
+ 			{
+ 				putchar(BACKSPACE);
+ 				cmdBufLen = mystrlen(pmsg->cmdBuff);
+ 				for(iVal = len; iVal < cmdBufLen; iVal++)
+ 				{
+ 					putchar(pmsg->cmdBuff[iVal + 1]);
+ 					pmsg->cmdBuff[iVal] = pmsg->cmdBuff[iVal + 1];
+ 				}
+ 				for(iVal = len; iVal < cmdBufLen; iVal++)
+ 				{
+ 					putchar(BACKSPACE);
+ 				}
+ 			}
  			/* Reset AutoComplete State */
  			g_autocomplstack.autoComplState = AUTO_IDLE;
  		}
@@ -197,11 +245,36 @@ funcPtr InputState(void *msg)
  	{
  		if(len < MAX_CMD_BUFFER_SIZE)
  		{
- 			pmsg->cmdBuff[len++] = ch;
- 			putchar(ch);
+ 			if(pmsg->left_right_state == LEFT_RIGHT_IDLE)
+ 			{
+ 				pmsg->cmdBuff[len++] = ch;
+	 			putchar(ch);	
+ 			}
+ 			else
+ 			{
+ 				cmdBufLen = mystrlen(pmsg->cmdBuff);
+ 				putchar(ch);	
+ 				/* RePrint Rest of the command buffer to create moving effect */
+ 				for(iVal = len; iVal < cmdBufLen; iVal++)
+ 				{
+ 					putchar(pmsg->cmdBuff[iVal]);
+ 				}
+ 				/* Push the entire command buffer right by one position */
+ 				for(iVal = cmdBufLen; iVal >= len; iVal--)
+ 				{
+ 					pmsg->cmdBuff[iVal + 1] = pmsg->cmdBuff[iVal];
+ 				}
+ 				/* Reset cursor to next location */
+ 				for(iVal = len; iVal < cmdBufLen; iVal++)
+ 				{
+ 					putchar(BACKSPACE);
+ 				}
+ 				pmsg->cmdBuff[len++] = ch;
+ 			}
 
  			/* Reset AutoComplete State */
  			g_autocomplstack.autoComplState = AUTO_IDLE;
+ 			
  		}
  	}
 
@@ -358,6 +431,17 @@ funcPtr RespondState(void *msg)
  	return SUCCESS;
  }
 
+ RET_CODE history(PMSG *pmsg)
+ {
+ 	int iVal = 0;
+ 	/* Print the history stack */
+ 	for(iVal = 0; iVal < g_histstack.stackSize; iVal++)
+ 	{
+ 		printf("%s\n", g_histstack.stackBuffer[iVal]);
+ 	}
+
+ 	return SUCCESS;
+ }
 
  RET_CODE myexit(PMSG *pmsg)
  {

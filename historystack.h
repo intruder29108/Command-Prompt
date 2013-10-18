@@ -25,12 +25,13 @@
  	int  accessIndex;
  	STACK_POP_STATE	stack_pop_state;
  } HIST_STACK;
-typedef enum {STACK_SUCCESS, STACK_UNDERFLOW, STACK_OVERFLOW, STACK_ERROR, STACK_NULL_ERR} STACK_RET_CODE;
+typedef enum {STACK_SUCCESS,  STACK_FAILURE, STACK_UNDERFLOW, STACK_OVERFLOW, STACK_ERROR, STACK_NULL_ERR} STACK_RET_CODE;
 
 /* Forward Declarations */
 STACK_RET_CODE stack_initialize(HIST_STACK *);
 STACK_RET_CODE stack_push(HIST_STACK *,  char *);
 STACK_RET_CODE stack_pop_up(HIST_STACK *, char *);
 STACK_RET_CODE stack_pop_down(HIST_STACK *, char *);
+STACK_RET_CODE checkIfElementExists(HIST_STACK *, char *);
 
- #endif
+#endif

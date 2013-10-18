@@ -41,6 +41,20 @@ STACK_RET_CODE stack_push(HIST_STACK *histStack, char *entry)
 		return STACK_NULL_ERR;
 	}
 
+	/* Check if element exists in stack */
+	if(checkIfElementExists(histStack, entry) == STACK_SUCCESS)
+	{
+		/* Skip this entry */
+		return STACK_SUCCESS;
+	}
+
+	/* Skip entry if length is zero */
+	if(mystrlen(entry) == 0)
+	{
+		/* Skip this entry */
+		return STACK_SUCCESS;
+	}
+
 	/* Push down */
 	for(index = MAX_STACK_SIZE - 1; index > 0; index--)
 	{
@@ -113,3 +127,28 @@ STACK_RET_CODE stack_pop_down(HIST_STACK *histStack, char *entry)
 	histStack->accessIndex = prevaccessIndex;
 	return STACK_UNDERFLOW;
 }
+
+
+/*
+ *	Name		:	checkIfElementExists
+ *	Description	:	Checks the history stack for a given entry
+ *					
+ *
+ *	In			: 	HIST_STACK *histStack, char *entry
+ *	Return		:	STACK_RET_CODE
+ */
+ STACK_RET_CODE checkIfElementExists(HIST_STACK *histStack, char *entry)
+ {
+ 	int iVal;
+
+ 	for(iVal = 0; iVal < histStack->stackSize; iVal++)
+ 	{
+ 		/* Compare each element */
+ 		if(mystrcmp(histStack->stackBuffer[iVal], entry) == 0)
+ 		{
+ 			return STACK_SUCCESS;
+ 		}
+ 	}
+
+ 	return STACK_FAILURE;
+ }

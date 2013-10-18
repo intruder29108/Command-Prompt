@@ -22,6 +22,7 @@
 
 /* Typedefs goes here */
 typedef enum {INSIDE_WORD, OUTSIDE_WORD} PARSE_STATE;
+typedef enum {LEFT_RIGHT_ACTIVE, LEFT_RIGHT_IDLE} LEFT_RIGHT_STATE;
 typedef int (*funcPtr)(void *);
 typedef funcPtr (*pFuncPtr)(void *);  
 typedef struct 
@@ -31,6 +32,7 @@ typedef struct
 	char argv[MAX_NUM_PARAMS][MAX_PARAM_BUFFER_SIZE];
 	int numTrailingWhiteSpaces[MAX_NUM_PARAMS];
 	PARSE_STATE parse_state;
+	LEFT_RIGHT_STATE left_right_state;
 } PMSG;
 typedef struct 
 {
@@ -53,6 +55,7 @@ RET_CODE CLILoop();
 RET_CODE help(PMSG *);
 RET_CODE echo(PMSG *);
 RET_CODE add(PMSG *);
+RET_CODE history(PMSG *);
 RET_CODE myexit(PMSG *);
 
 #endif

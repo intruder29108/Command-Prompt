@@ -32,8 +32,6 @@
  	{
  		len++;
  	}
-
-
  	return len;
  }
  
@@ -99,13 +97,13 @@
   */
  int mystrcmp(char *str1, char *str2)
  {
- 	while(*str1 == *str2 && *str1 != '\0')
- 	{
- 		str1++;
- 		str2++;
- 	}
+ 	  while(*str1 == *str2 && *str1 != '\0')
+ 	  {
+ 		   str1++;
+ 		   str2++;
+ 	  }
 
- 	return (*str1 - *str2);
+ 	  return (*str1 - *str2);
  }
 
 
@@ -133,6 +131,24 @@
  	return FALSE;
  }
 
+
+ /*
+  *  Name    :  myprintstr
+  *  Description  :  Custom function to print a string
+  *          
+  *
+  *  In      :   char *str
+  *  Return    :  int 
+  */
+  int  myprintstr(char *str)
+  {
+    while(*str != EOS)
+    {
+      putchar(*str++);
+    }
+    return 0;
+  }
+
 /* Math functions */
 
 /*
@@ -152,3 +168,4 @@ int mypower(int x, int y)
 
 	return (x*mypower(x, y-1));
 }
+
