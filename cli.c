@@ -28,7 +28,9 @@ CMD_TABLE cmdTable[] = {
 
 /* Global Message Structure */
 PMSG g_pmsg;
+/* Global History Stack Structure */
 HIST_STACK g_histstack;
+/* Global Auto Complete Stack Structure */
 AUTOCOMPL_STRUCT g_autocomplstack;
 
 
@@ -169,8 +171,7 @@ funcPtr InputState(void *msg)
 
  	else if(ch == TAB)
  	{
- 		/* Terminate with EOS for search */
- 		pmsg->cmdBuff[len] = EOS;
+ 		/* Search the string in command table */
  		if(findMatch(&g_autocomplstack, pmsg->cmdBuff, cmdTable
  					, sizeof(cmdTable)/sizeof(CMD_TABLE)) == AUTOCOMPL_SUCCESS)
  		{ 		

@@ -7,7 +7,6 @@
  */
     
  /* Standard Library includes */
- #include <stdio.h>
 
  /* Project includes goes here */
  #include "historystack.h"
