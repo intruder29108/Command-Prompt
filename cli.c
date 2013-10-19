@@ -69,6 +69,7 @@ funcPtr InitState(void *msg)
 	/* Initialize autocomplete stack */
 	initializeAutoCompl(&g_autocomplstack);
 
+	myprintstr(LINE_FEED);
 	putchar('>');
 
 	return (funcPtr)InputState;
@@ -101,7 +102,7 @@ funcPtr InputState(void *msg)
  			/* Check if History Stack is empty */
  			if(IS_STACK_EMPTY(g_histstack) == FALSE)
  			{
- 				/* Clean the command buffer */
+ 				/* Pop the TOS to command buffer */
  				if(stack_pop_up(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
  				{
  					return (funcPtr)InputState;
@@ -117,7 +118,7 @@ funcPtr InputState(void *msg)
  					putchar(BACKSPACE);
  				}
  				len = mystrlen(pmsg->cmdBuff);
- 				printf("%s", pmsg->cmdBuff);
+ 				myprintstr(pmsg->cmdBuff);
  			}
  
  		}
@@ -141,13 +142,14 @@ funcPtr InputState(void *msg)
  					putchar(BACKSPACE);
  				}
  				len = mystrlen(pmsg->cmdBuff);
- 				printf("%s", pmsg->cmdBuff);
+ 				myprintstr(pmsg->cmdBuff);
  			}
  		}
  		else if(ch == LEFT)
  		{
  			if(len > 0)
  			{
+ 				/* Move the cursor back by one */
  				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
  				putchar(BACKSPACE);
  				len--;
@@ -158,6 +160,7 @@ funcPtr InputState(void *msg)
  		{
  			if(len < mystrlen(pmsg->cmdBuff))
  			{
+ 				/* Move the cursor forward and reprint */
  				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
  				putchar(pmsg->cmdBuff[len++]);
  			}
@@ -183,7 +186,7 @@ funcPtr InputState(void *msg)
  				putchar(BACKSPACE);
  			}
  			len = mystrlen(pmsg->cmdBuff);
- 			printf("%s", pmsg->cmdBuff);
+ 			myprintstr(pmsg->cmdBuff);
  		}
  	}
 
@@ -197,13 +200,14 @@ funcPtr InputState(void *msg)
  				len = mystrlen(pmsg->cmdBuff);
  			}
  			pmsg->cmdBuff[len] = EOS;
- 			putchar(ch);
+ 			/* Move the next line */
+ 			myprintstr(LINE_FEED);
  			len = 0;
 
  			/* Push to history stack */
  			if(stack_push(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
  			{
- 				printf("Error : Stack Push !!!");
+ 				myprintstr("Error : Stack Push !!!");
  			}
 
  			return (funcPtr)ParseState;
@@ -328,13 +332,9 @@ funcPtr RespondState(void *msg)
  	/* Return incase of no input */
  	if(pmsg->argc == 0)
  	{
- 		printf("\n");
  		return (funcPtr)InitState;
  	}
-
  	numCmds = sizeof(cmdTable)/sizeof(CMD_TABLE);
- 	printf("\n\n");
-
  	for(iVal = 0; iVal < numCmds; iVal++)
  	{
  		if(mystrcmp(pmsg->argv[0], cmdTable[iVal].cmdName) == 0)
@@ -342,15 +342,16 @@ funcPtr RespondState(void *msg)
  			cmdFound = TRUE;
  			if((pmsg->argc - 1) != cmdTable[iVal].argNum)
  			{
- 				printf("Incorrect Usage !!!\n");
- 				printf("%s\n", cmdTable[iVal].cmdUsage);
+ 				myprintstr("Incorrect Usage !!!");
+ 				myprintstr(LINE_FEED);
+ 				myprintstr(cmdTable[iVal].cmdUsage);
  				break;
  			}
 
  			switch(cmdTable[iVal].cmdFuncPtr(pmsg))
  			{
  				case PARAM_ERR:
- 					printf("Parameter Error !!!\n");
+ 					myprintstr("Parameter Error !!!");
  					break;
  				case EXIT_CODE:
  					return (funcPtr)NULL;
@@ -361,7 +362,7 @@ funcPtr RespondState(void *msg)
 
  	if(cmdFound == FALSE)
  	{
- 		printf("Command not found !!!, Try \"help\" for list\n");
+ 		myprintstr("Command not found !!!, Try \"help\" for list");
  	}
 
 
@@ -377,11 +378,16 @@ funcPtr RespondState(void *msg)
  	int numCmds, iVal;
 
  	numCmds = sizeof(cmdTable)/sizeof(CMD_TABLE);
- 	printf("Command\tUsage\n");
- 	printf("--------------\n");
+ 	myprintstr("Command\tUsage");
+ 	myprintstr(LINE_FEED);
+ 	myprintstr("--------------");
+ 	myprintstr(LINE_FEED);
  	for(iVal = 0; iVal < numCmds; iVal++)
  	{
- 		printf("%s\t%s\n", cmdTable[iVal].cmdName, cmdTable[iVal].cmdUsage);
+ 		myprintstr(cmdTable[iVal].cmdName);
+ 		putchar(TAB);
+ 		myprintstr(cmdTable[iVal].cmdUsage);
+ 		myprintstr(LINE_FEED);
  	}
 
  	return SUCCESS;
@@ -389,7 +395,7 @@ funcPtr RespondState(void *msg)
 
  RET_CODE echo(PMSG *pmsg)
  {
- 	printf("%s\n", pmsg->argv[1]);
+ 	myprintstr(pmsg->argv[1]);
  	return SUCCESS;
  }
 
@@ -427,7 +433,11 @@ funcPtr RespondState(void *msg)
  			return PARAM_ERR;
  		}
  	}
- 	printf("%d + %d = %d\n",x, y, x+y);
+ 	myprintinteger(x);
+ 	myprintstr(" + ");
+ 	myprintinteger(y);
+ 	myprintstr(" = ");
+ 	myprintinteger(x+y);
 
  	return SUCCESS;
  }
@@ -438,7 +448,8 @@ funcPtr RespondState(void *msg)
  	/* Print the history stack */
  	for(iVal = 0; iVal < g_histstack.stackSize; iVal++)
  	{
- 		printf("%s\n", g_histstack.stackBuffer[iVal]);
+ 		myprintstr(g_histstack.stackBuffer[iVal]);
+ 		myprintstr(LINE_FEED);
  	}
 
  	return SUCCESS;
@@ -446,6 +457,7 @@ funcPtr RespondState(void *msg)
 
  RET_CODE myexit(PMSG *pmsg)
  {
- 	printf("Exiting ...\n");
+ 	myprintstr("Exiting ...");
+ 	myprintstr(LINE_FEED);
  	return EXIT_CODE;
  }

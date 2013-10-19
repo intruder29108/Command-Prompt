@@ -34,8 +34,6 @@
  	}
  	return len;
  }
- 
-
 
  /*
   *	Name		:	myatoi
@@ -132,6 +130,8 @@
  }
 
 
+
+
  /*
   *  Name    :  myprintstr
   *  Description  :  Custom function to print a string
@@ -148,6 +148,31 @@
     }
     return 0;
   }
+
+ /*
+  *  Name    :  myprintinteger
+  *  Description  :  Custom function to print integers
+  *          
+  *
+  *  In      :   int number
+  *  Return    :  void
+  */
+  void myprintinteger(int number)
+  {
+    unsigned char digit;
+
+    if(number == 0)
+    {
+        return;
+    }
+
+    /* Get the last digit */
+    digit = (number % 10) + ASCII_NUM;
+    myprintinteger(number/10);
+    putchar(digit);
+    return;
+  }
+
 
 /* Math functions */
 
@@ -168,4 +193,3 @@ int mypower(int x, int y)
 
 	return (x*mypower(x, y-1));
 }
-

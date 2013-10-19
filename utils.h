@@ -21,6 +21,7 @@
  #define 	DOWN		80
  #define 	LEFT		75
  #define 	RIGHT 		77
+ #define 	ASCII_NUM	0x30
  #define	BACKSPACE	'\b'
  #define 	CARR_RET	'\r'
  #define 	NEW_LINE	'\n'
@@ -46,7 +47,9 @@
  int mystrcmp(char *, char *);
  int mystrstr(char *, char *);
  int myprintstr(char *);
+ void myprintinteger(int);
  RET_CODE myatoi(char *, int, int *);
+
 
  /* Math Functions */
  int mypower(int, int);
