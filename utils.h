@@ -10,18 +10,24 @@
  #ifndef UTILS_H
  #define UTILS_H
 
+ /* Standard Includes Goes here */
+ #include <termios.h>
+ #include <unistd.h>
+
  /* Macros goes here */
  #define 	HEX			16
  #define 	DEC 		10
  #define 	EOS			'\0'
  #define 	TRUE		1
  #define 	FALSE		0
- #define 	ESC_SEQ		224
- #define 	UP			72
- #define 	DOWN		80
- #define 	LEFT		75
- #define 	RIGHT 		77
+ #define 	ESC_SEQ		0x1b
+ #define 	ESC_SEQ1	0x5b
+ #define 	UP			'A'
+ #define 	DOWN		'B'
+ #define 	LEFT		'D'
+ #define 	RIGHT 		'C'
  #define 	ASCII_NUM	0x30
+ #define 	DELETE		127
  #define	BACKSPACE	'\b'
  #define 	CARR_RET	'\r'
  #define 	NEW_LINE	'\n'
@@ -50,8 +56,11 @@
  void myprintinteger(int);
  RET_CODE myatoi(char *, int, int *);
 
-
  /* Math Functions */
  int mypower(int, int);
+
+ /* Termios Functions */
+ void disableEchoCanonMode(struct termios *);
+ void restoreTerminalMode(struct termios *);
 
  #endif

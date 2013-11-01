@@ -6,8 +6,6 @@
  *  Description :	String and Math functions
  */
 
-/* Standard Includes */
-
 
 /* Project Includes */
  #include "utils.h"
@@ -24,9 +22,9 @@
   *	In			: 	char *str
   *	Return		:	int
   */
- int mystrlen(char *str)
- {
- 	int len = 0;
+  int mystrlen(char *str)
+  {
+      int len = 0;
 
  	while(str[len] != EOS)
  	{
@@ -133,12 +131,12 @@
 
 
  /*
-  *  Name    :  myprintstr
-  *  Description  :  Custom function to print a string
+  *  Name       :  myprintstr
+  *  Description:  Custom function to print a string
   *          
   *
-  *  In      :   char *str
-  *  Return    :  int 
+  *  In         :  char *str
+  *  Return     :  int 
   */
   int  myprintstr(char *str)
   {
@@ -150,12 +148,12 @@
   }
 
  /*
-  *  Name    :  myprintinteger
-  *  Description  :  Custom function to print integers
+  *  Name       :  myprintinteger
+  *  Description:  Custom function to print integers
   *          
   *
-  *  In      :   int number
-  *  Return    :  void
+  *  In         :  int number
+  *  Return     :  void
   */
   void myprintinteger(int number)
   {
@@ -193,3 +191,44 @@ int mypower(int x, int y)
 
 	return (x*mypower(x, y-1));
 }
+
+/* Termios Functions */
+
+/*
+ *  Name        :   disableEchoCanonMode
+ *  Description :   Custom Function to change default 
+ *                  Terminal Behavior
+ *
+ *  In          :   struct termios *oldSettings
+ *  Out         :   struct termios *oldSettings
+ *  Return      :   void 
+ */
+void disableEchoCanonMode(struct termios *oldSettings)
+{
+    struct termios newSettings; 
+    /* Get current terminal settings */
+    tcgetattr(STDIN_FILENO, oldSettings);
+    /* Now make a mutable copy */
+    newSettings = *oldSettings;
+    /* Disable Cannonical and Echo Mode */
+    newSettings.c_lflag &= ~(ICANON | ECHO);
+    /* Apply the new settings */
+    tcsetattr(STDIN_FILENO, TCSANOW, &newSettings);
+
+    return;
+}
+
+/*
+ *  Name        :   restoreTerminalMode
+ *  Description :   Custom Function to restore default
+ *                  Terminal Behavior
+ *
+ *  In          :   struct termios *oldSettings
+ *  Return      :   void
+ */
+ void restoreTerminalMode(struct termios *oldSettings)
+ {
+    /* Restore Default terminal Mode */
+    tcsetattr(STDIN_FILENO, TCSANOW, oldSettings);
+    return;
+ }

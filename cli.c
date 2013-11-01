@@ -70,7 +70,7 @@ funcPtr InitState(void *msg)
 	initializeAutoCompl(&g_autocomplstack);
 
 	myprintstr(LINE_FEED);
-	putchar('>');
+	myprintstr("CLI>>");
 
 	return (funcPtr)InputState;
 }
@@ -90,86 +90,90 @@ funcPtr InputState(void *msg)
  	}
 
  	/* Get user input */
- 	ch = getch();
+ 	ch = getchar();
 
  	/* Combined key presses */
  	if(ch == ESC_SEQ)
  	{
  		/* Get second key code */
- 		ch = getch();
- 		if(ch == UP)
+ 		ch = getchar();
+ 		if(ch == ESC_SEQ1)
  		{
- 			/* Check if History Stack is empty */
- 			if(IS_STACK_EMPTY(g_histstack) == FALSE)
+ 			 /* Get third key code */
+ 			ch = getchar();
+ 			if(ch == UP)
  			{
- 				/* Pop the TOS to command buffer */
- 				if(stack_pop_up(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
+ 				/* Check if History Stack is empty */
+ 				if(IS_STACK_EMPTY(g_histstack) == FALSE)
  				{
- 					return (funcPtr)InputState;
- 				}
- 				/* Set up stack pop state */
- 				g_histstack.stack_pop_state = STACK_UP;
+ 					/* Pop the TOS to command buffer */
+ 					if(stack_pop_up(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
+ 					{
+ 						return (funcPtr)InputState;
+ 					}
+ 					/* Set up stack pop state */
+ 					g_histstack.stack_pop_state = STACK_UP;
 
- 				/* Clear the current Line */
- 				while(len--)
- 				{
- 					putchar(BACKSPACE);
- 					putchar(SPACE);
- 					putchar(BACKSPACE);
+ 					/* Clear the current Line */
+ 					while(len--)
+ 					{
+ 						putchar(BACKSPACE);
+ 						putchar(SPACE);
+ 						putchar(BACKSPACE);
+ 					}
+ 					len = mystrlen(pmsg->cmdBuff);
+ 					myprintstr(pmsg->cmdBuff);
  				}
- 				len = mystrlen(pmsg->cmdBuff);
- 				myprintstr(pmsg->cmdBuff);
- 			}
- 
- 		}
- 		else if(ch == DOWN)
- 		{
- 			/* Check if History Stack is empty */
- 			if(IS_STACK_EMPTY(g_histstack) == FALSE)
- 			{
- 				/* Clean the command buffer */
- 				if(stack_pop_down(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
- 				{
- 					return (funcPtr)InputState;
- 				}
- 				/* Set up stack pop state */
- 				g_histstack.stack_pop_state = STACK_DOWN;
- 				/* Clear the current Line */
- 				while(len--)
- 				{
- 					putchar(BACKSPACE);
- 					putchar(SPACE);
- 					putchar(BACKSPACE);
- 				}
- 				len = mystrlen(pmsg->cmdBuff);
- 				myprintstr(pmsg->cmdBuff);
- 			}
- 		}
- 		else if(ch == LEFT)
- 		{
- 			if(len > 0)
- 			{
- 				/* Move the cursor back by one */
- 				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
- 				putchar(BACKSPACE);
- 				len--;
- 			}
- 			
- 		}
- 		else if(ch == RIGHT)
- 		{
- 			if(len < mystrlen(pmsg->cmdBuff))
- 			{
- 				/* Move the cursor forward and reprint */
- 				pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
- 				putchar(pmsg->cmdBuff[len++]);
- 			}
- 			else
- 			{
- 				pmsg->left_right_state = LEFT_RIGHT_IDLE;
- 			}
- 		}
 
+ 			}
+ 			else if(ch == DOWN)
+ 			{
+ 				/* Check if History Stack is empty */
+ 				if(IS_STACK_EMPTY(g_histstack) == FALSE)
+ 				{
+ 					/* Clean the command buffer */
+ 					if(stack_pop_down(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
+ 					{
+ 						return (funcPtr)InputState;
+ 					}
+ 					/* Set up stack pop state */
+ 					g_histstack.stack_pop_state = STACK_DOWN;
+ 					/* Clear the current Line */
+ 					while(len--)
+ 					{
+ 						putchar(BACKSPACE);
+ 						putchar(SPACE);
+ 						putchar(BACKSPACE);
+ 					}
+ 					len = mystrlen(pmsg->cmdBuff);
+ 					myprintstr(pmsg->cmdBuff);
+ 				}
+ 			}
+ 			else if(ch == LEFT)
+ 			{
+ 				if(len > 0)
+ 				{
+ 					/* Move the cursor back by one */
+ 					pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
+ 					putchar(BACKSPACE);
+ 					len--;
+ 				}
+
+ 			}
+ 			else if(ch == RIGHT)
+ 			{
+ 				if(len < mystrlen(pmsg->cmdBuff))
+ 				{
+ 					/* Move the cursor forward and reprint */
+ 					pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
+ 					putchar(pmsg->cmdBuff[len++]);
+ 				}
+ 				else
+ 				{
+ 					pmsg->left_right_state = LEFT_RIGHT_IDLE;
+ 				}
+ 			}
+ 		}
  	}
 
  	else if(ch == TAB)
@@ -200,8 +204,6 @@ funcPtr InputState(void *msg)
  				len = mystrlen(pmsg->cmdBuff);
  			}
  			pmsg->cmdBuff[len] = EOS;
- 			/* Move the next line */
- 			myprintstr(LINE_FEED);
  			len = 0;
 
  			/* Push to history stack */
@@ -213,7 +215,7 @@ funcPtr InputState(void *msg)
  			return (funcPtr)ParseState;
  		}
  	}
- 	else if(ch == BACKSPACE)
+ 	else if(ch == DELETE || ch == BACKSPACE)
  	{
  		if(len)
  		{
@@ -234,7 +236,15 @@ funcPtr InputState(void *msg)
  				cmdBufLen = mystrlen(pmsg->cmdBuff);
  				for(iVal = len; iVal < cmdBufLen; iVal++)
  				{
- 					putchar(pmsg->cmdBuff[iVal + 1]);
+ 					/* Since EOS is nonprintable replacing with space */
+ 					if(pmsg->cmdBuff[iVal + 1] == EOS)
+ 					{
+ 						putchar(SPACE);
+ 					}
+ 					else
+ 					{
+ 						putchar(pmsg->cmdBuff[iVal + 1]);
+ 					}
  					pmsg->cmdBuff[iVal] = pmsg->cmdBuff[iVal + 1];
  				}
  				for(iVal = len; iVal < cmdBufLen; iVal++)
@@ -334,6 +344,8 @@ funcPtr RespondState(void *msg)
  	{
  		return (funcPtr)InitState;
  	}
+ 	/* Move the next line */
+ 	myprintstr(LINE_FEED);
  	numCmds = sizeof(cmdTable)/sizeof(CMD_TABLE);
  	for(iVal = 0; iVal < numCmds; iVal++)
  	{

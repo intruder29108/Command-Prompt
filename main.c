@@ -7,11 +7,15 @@
  */
     
  /* Standard Library includes */
+ #include <termios.h>
 
  /* Project includes goes here */
  #include "historystack.h"
  #include "cli.h"
  
+
+ /* Global Variables to store terminal settings */
+ static struct termios g_OldSettings;
  /* Reference to global message structure */
  extern PMSG g_pmsg;
  /* Reference to history stack strucuture */
@@ -34,11 +38,27 @@
   		return -1;
   	}
 
- 	/* Enter CLI Loop */
+    /* Change Termianl Settings */
+    disableEchoCanonMode(&g_OldSettings);
+    /* Welcome notes */
+    myprintstr("Welcome to CLI");
+    myprintstr(LINE_FEED);
+    myprintstr("Type \"Help\" for list of commands");
+    myprintstr(LINE_FEED);
+    myprintstr(LINE_FEED);
+    myprintstr("Hit    <TAB>     for autocomplete");
+    myprintstr(LINE_FEED);
+    myprintstr("Hit <UP>/<DOWN>  for command history");
+    myprintstr(LINE_FEED);
+    myprintstr("Hit <LEFT/RIGHT> for line editing");
+
+  	/* Enter CLI Loop */  
     while(1)
     {
        if(CLILoop() == EXIT_CODE)
        {
+        /* Restore Previous Termianl Settings */
+         restoreTerminalMode(&g_OldSettings);
          break;
        }
     }
