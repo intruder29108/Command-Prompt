@@ -7,12 +7,19 @@
  */
 
 /* Standard Library includes goes here */
-#include <stdio.h>
 #include <string.h>
 
 /* Project includes goes here */
+#include "ioroutines.h"
 #include "cli.h"
+
+#ifdef USE_HIST_STACK
+#include "historystack.h"
+#endif
+
+#ifdef USE_AUTOCOMPL_STACK
 #include "autocompletestack.h"
+#endif
 
 
 /* Command Table Definition */
@@ -20,7 +27,9 @@ CMD_TABLE cmdTable[] = {
 	{"help",	help ,		0,	"help"},
 	{"echo",	echo,		1,	"echo <string>"},
 	{"add",		add ,		2,	"add  <num1> <num2>"},
+#ifdef USE_HIST_STACK
 	{"history", history,	0,  "history"},
+#endif
 	{"exit",	myexit, 	0,	"exit"}
 };
 
@@ -28,11 +37,16 @@ CMD_TABLE cmdTable[] = {
 
 /* Global Message Structure */
 PMSG g_pmsg;
+
+#ifdef USE_HIST_STACK
 /* Global History Stack Structure */
 HIST_STACK g_histstack;
+#endif
+
+#ifdef USE_AUTOCOMPL_STACK
 /* Global Auto Complete Stack Structure */
 AUTOCOMPL_STRUCT g_autocomplstack;
-
+#endif
 
 /* Function definitions goes here */
 
@@ -62,12 +76,16 @@ funcPtr InitState(void *msg)
 	pmsg->parse_state = OUTSIDE_WORD;
 	pmsg->left_right_state = LEFT_RIGHT_IDLE;
 
+#ifdef USE_HIST_STACK
 	/* Initialize access index for history stack */
 	g_histstack.accessIndex = STACK_HEAD;
 	g_histstack.stack_pop_state = STACK_IDLE;
+#endif
 
+#ifdef USE_AUTOCOMPL_STACK
 	/* Initialize autocomplete stack */
 	initializeAutoCompl(&g_autocomplstack);
+#endif
 
 	myprintstr(LINE_FEED);
 	myprintstr("CLI>>");
@@ -90,19 +108,20 @@ funcPtr InputState(void *msg)
  	}
 
  	/* Get user input */
- 	ch = getchar();
+ 	ch = custom_ioread();
 
  	/* Combined key presses */
  	if(ch == ESC_SEQ)
  	{
  		/* Get second key code */
- 		ch = getchar();
+ 		ch = custom_ioread();
  		if(ch == ESC_SEQ1)
  		{
  			 /* Get third key code */
- 			ch = getchar();
+ 			ch = custom_ioread();
  			if(ch == UP)
  			{
+#ifdef USE_HIST_STACK
  				/* Check if History Stack is empty */
  				if(IS_STACK_EMPTY(g_histstack) == FALSE)
  				{
@@ -117,17 +136,18 @@ funcPtr InputState(void *msg)
  					/* Clear the current Line */
  					while(len--)
  					{
- 						putchar(BACKSPACE);
- 						putchar(SPACE);
- 						putchar(BACKSPACE);
+ 						custom_iowrite(BACKSPACE);
+ 						custom_iowrite(SPACE);
+ 						custom_iowrite(BACKSPACE);
  					}
  					len = mystrlen(pmsg->cmdBuff);
  					myprintstr(pmsg->cmdBuff);
  				}
-
+#endif
  			}
  			else if(ch == DOWN)
  			{
+#ifdef USE_HIST_STACK
  				/* Check if History Stack is empty */
  				if(IS_STACK_EMPTY(g_histstack) == FALSE)
  				{
@@ -141,13 +161,14 @@ funcPtr InputState(void *msg)
  					/* Clear the current Line */
  					while(len--)
  					{
- 						putchar(BACKSPACE);
- 						putchar(SPACE);
- 						putchar(BACKSPACE);
+ 						custom_iowrite(BACKSPACE);
+ 						custom_iowrite(SPACE);
+ 						custom_iowrite(BACKSPACE);
  					}
  					len = mystrlen(pmsg->cmdBuff);
  					myprintstr(pmsg->cmdBuff);
  				}
+#endif
  			}
  			else if(ch == LEFT)
  			{
@@ -155,7 +176,7 @@ funcPtr InputState(void *msg)
  				{
  					/* Move the cursor back by one */
  					pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
- 					putchar(BACKSPACE);
+ 					custom_iowrite(BACKSPACE);
  					len--;
  				}
 
@@ -166,7 +187,7 @@ funcPtr InputState(void *msg)
  				{
  					/* Move the cursor forward and reprint */
  					pmsg->left_right_state = LEFT_RIGHT_ACTIVE;
- 					putchar(pmsg->cmdBuff[len++]);
+ 					custom_iowrite(pmsg->cmdBuff[len++]);
  				}
  				else
  				{
@@ -178,6 +199,7 @@ funcPtr InputState(void *msg)
 
  	else if(ch == TAB)
  	{
+#ifdef 	USE_AUTOCOMPL_STACK
  		/* Search the string in command table */
  		if(findMatch(&g_autocomplstack, pmsg->cmdBuff, cmdTable
  					, sizeof(cmdTable)/sizeof(CMD_TABLE)) == AUTOCOMPL_SUCCESS)
@@ -185,13 +207,14 @@ funcPtr InputState(void *msg)
  			/* Clear the current Line */
  			while(len--)
  			{
- 				putchar(BACKSPACE);
- 				putchar(SPACE);
- 				putchar(BACKSPACE);
+ 				custom_iowrite(BACKSPACE);
+ 				custom_iowrite(SPACE);
+ 				custom_iowrite(BACKSPACE);
  			}
  			len = mystrlen(pmsg->cmdBuff);
  			myprintstr(pmsg->cmdBuff);
  		}
+#endif
  	}
 
  	else if(ch == CARR_RET || ch == NEW_LINE)
@@ -205,13 +228,13 @@ funcPtr InputState(void *msg)
  			}
  			pmsg->cmdBuff[len] = EOS;
  			len = 0;
-
+#ifdef USE_HIST_STACK
  			/* Push to history stack */
  			if(stack_push(&g_histstack, pmsg->cmdBuff) != STACK_SUCCESS)
  			{
  				myprintstr("Error : Stack Push !!!");
  			}
-
+#endif
  			return (funcPtr)ParseState;
  		}
  	}
@@ -224,36 +247,38 @@ funcPtr InputState(void *msg)
  			if(pmsg->left_right_state == LEFT_RIGHT_IDLE)
  			{
  				pmsg->cmdBuff[len] = EOS;				
- 				putchar(BACKSPACE);
- 				putchar(SPACE);
- 				putchar(BACKSPACE);
+ 				custom_iowrite(BACKSPACE);
+ 				custom_iowrite(SPACE);
+ 				custom_iowrite(BACKSPACE);
 
  			}
  			/* Shift entire command buffer to left once */
  			else
  			{
- 				putchar(BACKSPACE);
+ 				custom_iowrite(BACKSPACE);
  				cmdBufLen = mystrlen(pmsg->cmdBuff);
  				for(iVal = len; iVal < cmdBufLen; iVal++)
  				{
  					/* Since EOS is nonprintable replacing with space */
  					if(pmsg->cmdBuff[iVal + 1] == EOS)
  					{
- 						putchar(SPACE);
+ 						custom_iowrite(SPACE);
  					}
  					else
  					{
- 						putchar(pmsg->cmdBuff[iVal + 1]);
+ 						custom_iowrite(pmsg->cmdBuff[iVal + 1]);
  					}
  					pmsg->cmdBuff[iVal] = pmsg->cmdBuff[iVal + 1];
  				}
  				for(iVal = len; iVal < cmdBufLen; iVal++)
  				{
- 					putchar(BACKSPACE);
+ 					custom_iowrite(BACKSPACE);
  				}
  			}
+#ifdef USE_AUTOCOMPL_STACK
  			/* Reset AutoComplete State */
  			g_autocomplstack.autoComplState = AUTO_IDLE;
+#endif
  		}
  	}
  	else
@@ -263,16 +288,16 @@ funcPtr InputState(void *msg)
  			if(pmsg->left_right_state == LEFT_RIGHT_IDLE)
  			{
  				pmsg->cmdBuff[len++] = ch;
-	 			putchar(ch);	
+	 			custom_iowrite(ch);	
  			}
  			else
  			{
  				cmdBufLen = mystrlen(pmsg->cmdBuff);
- 				putchar(ch);	
+ 				custom_iowrite(ch);	
  				/* RePrint Rest of the command buffer to create moving effect */
  				for(iVal = len; iVal < cmdBufLen; iVal++)
  				{
- 					putchar(pmsg->cmdBuff[iVal]);
+ 					custom_iowrite(pmsg->cmdBuff[iVal]);
  				}
  				/* Push the entire command buffer right by one position */
  				for(iVal = cmdBufLen; iVal >= len; iVal--)
@@ -282,14 +307,14 @@ funcPtr InputState(void *msg)
  				/* Reset cursor to next location */
  				for(iVal = len; iVal < cmdBufLen; iVal++)
  				{
- 					putchar(BACKSPACE);
+ 					custom_iowrite(BACKSPACE);
  				}
  				pmsg->cmdBuff[len++] = ch;
  			}
-
+#ifdef USE_AUTOCOMPL_STACK
  			/* Reset AutoComplete State */
  			g_autocomplstack.autoComplState = AUTO_IDLE;
- 			
+#endif 			
  		}
  	}
 
@@ -397,7 +422,7 @@ funcPtr RespondState(void *msg)
  	for(iVal = 0; iVal < numCmds; iVal++)
  	{
  		myprintstr(cmdTable[iVal].cmdName);
- 		putchar(TAB);
+ 		custom_iowrite(TAB);
  		myprintstr(cmdTable[iVal].cmdUsage);
  		myprintstr(LINE_FEED);
  	}
@@ -454,6 +479,7 @@ funcPtr RespondState(void *msg)
  	return SUCCESS;
  }
 
+#ifdef USE_HIST_STACK
  RET_CODE history(PMSG *pmsg)
  {
  	int iVal = 0;
@@ -466,6 +492,7 @@ funcPtr RespondState(void *msg)
 
  	return SUCCESS;
  }
+#endif
 
  RET_CODE myexit(PMSG *pmsg)
  {

@@ -10,10 +10,9 @@
 #ifndef CLI_H
 #define CLI_H
 
-
-/* Project includes goes here */
+/* Project Include goes here */
+#include "common.h"
 #include "utils.h"
-#include "historystack.h"
 
 /* Macro Definition goes here */
 #define MAX_CMD_BUFFER_SIZE		100
@@ -30,7 +29,6 @@ typedef struct
 	char cmdBuff[MAX_CMD_BUFFER_SIZE];
 	int argc;
 	char argv[MAX_NUM_PARAMS][MAX_PARAM_BUFFER_SIZE];
-	int numTrailingWhiteSpaces[MAX_NUM_PARAMS];
 	PARSE_STATE parse_state;
 	LEFT_RIGHT_STATE left_right_state;
 } PMSG;
@@ -55,7 +53,9 @@ RET_CODE CLILoop();
 RET_CODE help(PMSG *);
 RET_CODE echo(PMSG *);
 RET_CODE add(PMSG *);
+#ifdef USE_HIST_STACK
 RET_CODE history(PMSG *);
+#endif
 RET_CODE myexit(PMSG *);
 
 #endif

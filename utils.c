@@ -9,6 +9,7 @@
 
 /* Project Includes */
  #include "utils.h"
+ #include "ioroutines.h"
 
 
 /* String Function Definition */
@@ -142,7 +143,7 @@
   {
     while(*str != EOS)
     {
-      putchar(*str++);
+      custom_iowrite(*str++);
     }
     return 0;
   }
@@ -167,7 +168,7 @@
     /* Get the last digit */
     digit = (number % 10) + ASCII_NUM;
     myprintinteger(number/10);
-    putchar(digit);
+    custom_iowrite(digit);
     return;
   }
 
@@ -192,6 +193,7 @@ int mypower(int x, int y)
 	return (x*mypower(x, y-1));
 }
 
+#ifdef USE_TERMIOS
 /* Termios Functions */
 
 /*
@@ -232,3 +234,4 @@ void disableEchoCanonMode(struct termios *oldSettings)
     tcsetattr(STDIN_FILENO, TCSANOW, oldSettings);
     return;
  }
+ #endif

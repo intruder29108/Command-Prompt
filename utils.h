@@ -10,9 +10,14 @@
  #ifndef UTILS_H
  #define UTILS_H
 
+ /* Project Includes goes here */
+ #include "common.h"
+
  /* Standard Includes Goes here */
+ #ifdef USE_TERMIOS
  #include <termios.h>
  #include <unistd.h>
+ #endif
 
  /* Macros goes here */
  #define 	HEX			16
@@ -59,8 +64,10 @@
  /* Math Functions */
  int mypower(int, int);
 
+#ifdef USE_TERMIOS
  /* Termios Functions */
  void disableEchoCanonMode(struct termios *);
  void restoreTerminalMode(struct termios *);
+#endif
 
  #endif

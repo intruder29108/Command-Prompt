@@ -6,16 +6,21 @@
  *  Description :	Main Loop
  */
     
- /* Standard Library includes */
- #include <termios.h>
-
  /* Project includes goes here */
+ #include "common.h"
  #include "historystack.h"
  #include "cli.h"
  
+ /* Standard Library includes */
+ #ifdef USE_TERMIOS
+ #include <termios.h>
+ #endif
 
+ #ifdef USE_TERMIOS
  /* Global Variables to store terminal settings */
  static struct termios g_OldSettings;
+ #endif
+
  /* Reference to global message structure */
  extern PMSG g_pmsg;
  /* Reference to history stack strucuture */
@@ -32,24 +37,32 @@
   int main(int argc, char *argv[])
   {
 
+#ifdef USE_HIST_STACK
   	/* Initialize history stack */
   	if(stack_initialize(&g_histstack) != STACK_SUCCESS)
   	{
   		return -1;
   	}
+#endif
 
-    /* Change Termianl Settings */
+#ifdef USE_TERMIOS
+    /* Change Terminal Settings */
     disableEchoCanonMode(&g_OldSettings);
+#endif
     /* Welcome notes */
     myprintstr("Welcome to CLI");
     myprintstr(LINE_FEED);
-    myprintstr("Type \"Help\" for list of commands");
+    myprintstr("Type \"help\" for list of commands");
     myprintstr(LINE_FEED);
     myprintstr(LINE_FEED);
+#ifdef USE_AUTOCOMPL_STACK
     myprintstr("Hit    <TAB>     for autocomplete");
     myprintstr(LINE_FEED);
+#endif
+#ifdef USE_HIST_STACK
     myprintstr("Hit <UP>/<DOWN>  for command history");
     myprintstr(LINE_FEED);
+#endif
     myprintstr("Hit <LEFT/RIGHT> for line editing");
 
   	/* Enter CLI Loop */  
@@ -57,8 +70,11 @@
     {
        if(CLILoop() == EXIT_CODE)
        {
+
+#ifdef USE_TERMIOS
         /* Restore Previous Termianl Settings */
          restoreTerminalMode(&g_OldSettings);
+#endif
          break;
        }
     }
