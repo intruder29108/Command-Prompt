@@ -1,48 +1,69 @@
-/*
- *	main.c
+/**
+ *  \file          main.c
+ *  
+ *  \brief         Main Program Loop.
+ *                 
  *
- *	Author		:	Antony Clince Alex
- *	Date		:	15 October 2013
- *  Description :	Main Loop
+ *  Author         Antony Clince Alex
+ *  Date           15 October 2013
+ *  Copyright(c) 2013 GPL. All Rights Reserved.
  */
-    
- /* Project includes goes here */
- #include "common.h"
- #include "historystack.h"
- #include "cli.h"
- 
- /* Standard Library includes */
- #ifdef USE_TERMIOS
- #include <termios.h>
- #endif
 
- #ifdef USE_TERMIOS
- /* Global Variables to store terminal settings */
- static struct termios g_OldSettings;
- #endif
+/***** Standard includes goes here *****/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#ifdef USE_TERMIOS
+#include <termios.h>
+#endif
+/***** Project includes goes here *****/
+#include "common.h"
+#include "utils.h"
+#include "ioroutines.h"
+#ifdef USE_HIST_STACK
+#include "historystack.h"
+#endif
+#include "cli.h"
+#ifdef USE_AUTOCOMPL_STACK
+#include "autocompletestack.h"
+#endif
+/***** Macros goes here *****/
 
- /* Reference to global message structure */
- extern PMSG g_pmsg;
- /* Reference to history stack strucuture */
- extern HIST_STACK g_histstack;
+/***** Typedefs and Enums goes here *****/
 
- /*
-  *	Name		:	main
-  *	Description	:	Main Program Loop
-  *					
-  *
-  *	In			: 	int argc, char *argv[]
-  *	Return		:	int
-  */
-  int main(int argc, char *argv[])
-  {
+/***** Global Variables *****/
+#ifdef USE_TERMIOS
+/* Global Variables to store terminal settings */
+static struct termios g_OldSettings;
+#endif
+/* Reference to global message structure */
+extern PMSG g_pmsg;
+/* Reference to history stack strucuture */
+extern HIST_STACK g_histstack;
+
+/***** Extern Variables *****/
+
+/***** Function Forward References *****/
+
+/***** Function Definitions *****/
+/**
+ *  \brief      main
+ *              Main Program Loop
+ *              
+ *
+ *  \param[in]  int argc, char *argv[]
+ *  
+ *  \return     int
+ */
+int main(int argc, char *argv[])
+{
 
 #ifdef USE_HIST_STACK
-  	/* Initialize history stack */
-  	if(stack_initialize(&g_histstack) != STACK_SUCCESS)
-  	{
-  		return -1;
-  	}
+    /* Initialize history stack */
+    if(stack_initialize(&g_histstack) != STACK_SUCCESS)
+    {
+      return -1;
+    }
 #endif
 
 #ifdef USE_TERMIOS
@@ -50,22 +71,40 @@
     disableEchoCanonMode(&g_OldSettings);
 #endif
     /* Welcome notes */
-    myprintstr("Welcome to CLI");
-    myprintstr(LINE_FEED);
-    myprintstr("Type \"help\" for list of commands");
-    myprintstr(LINE_FEED);
-    myprintstr(LINE_FEED);
+    custom_printstring(" _______________________________________________________ \n\r");
+    custom_printstring("/                                                       \\\n\r");
+    custom_printstring("|               Welcome to CLI                          |\n\r");
+    custom_printstring("\\_________              _______________________________/ \n\r");
+    custom_printstring("          \\_         __/    ___---------__               \n\r");
+    custom_printstring("            \\      _/      /              \\_             \n\r");
+    custom_printstring("             \\    /       /                 \\            \n\r");
+    custom_printstring("              |  /       | _    _ \\          \\           \n\r");
+    custom_printstring("              | |       / / \\  / \\ |          \\          \n\r");
+    custom_printstring("              | |       ||   ||   ||           |         \n\r");
+    custom_printstring("              | |       | \\_//\\\\_/ |           |         \n\r");
+    custom_printstring("              | |         |  ||     | _  / /   |         \n\r");
+    custom_printstring("               \\ \\        |_________|| \\/ /   /          \n\r");
+    custom_printstring("                \\ \\_       |_|_|_|_|/|  _/___/           \n\r");
+    custom_printstring("                 \\__>       _ _/_ _ /  |                 \n\r");
+    custom_printstring("                          .|_|_|_|_|   |                 \n\r");
+    custom_printstring("                          |           /                  \n\r");
+    custom_printstring("                          |__________/                   \n\r");
+    custom_printstring("Welcome to CLI");
+    custom_printstring(LINE_FEED);
+    custom_printstring("Type \"help\" for list of commands");
+    custom_printstring(LINE_FEED);
+    custom_printstring(LINE_FEED);
 #ifdef USE_AUTOCOMPL_STACK
-    myprintstr("Hit    <TAB>     for autocomplete");
-    myprintstr(LINE_FEED);
+    custom_printstring("Hit    <TAB>     for autocomplete");
+    custom_printstring(LINE_FEED);
 #endif
 #ifdef USE_HIST_STACK
-    myprintstr("Hit <UP>/<DOWN>  for command history");
-    myprintstr(LINE_FEED);
+    custom_printstring("Hit <UP>/<DOWN>  for command history");
+    custom_printstring(LINE_FEED);
 #endif
-    myprintstr("Hit <LEFT/RIGHT> for line editing");
+    custom_printstring("Hit <LEFT/RIGHT> for line editing");
 
-  	/* Enter CLI Loop */  
+    /* Enter CLI Loop */  
     while(1)
     {
        if(CLILoop() == EXIT_CODE)
@@ -81,3 +120,4 @@
 
   return 0;
 }
+

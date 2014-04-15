@@ -1,22 +1,42 @@
-/*
- *	historystack.c
+/**
+ *  \file          historystack.c
+ *  
+ *  \brief         Implements history stack feature for
+ *                 CLI Console.
  *
- *	Author		: Antony Clince Alex
- *	Date		: 15 October 2013
- *	Description :
- *					CLI History Stack implementation
+ *  Author         Antony Clince Alex
+ *  Date           15 October 2013
+ *  Copyright(c) 2013 GPL. All Rights Reserved.
  */
 
-/* Standard Library includes goes here */
+/***** Standard includes goes here *****/
  #include <string.h>
 
-/* Project includes goes here */
- #include "utils.h"
- #include "historystack.h"
+/***** Project includes goes here *****/
+#include "common.h"
+#include "utils.h"
+#include "historystack.h"
+/***** Macros goes here *****/
 
+/***** Typedefs and Enums goes here *****/
 
- /* Function definitions goes here */
+/***** Global Variables *****/
 
+/***** Extern Variables *****/
+
+/***** Function Forward References *****/
+
+/***** Function Definitions *****/
+
+/**
+ *  \brief      stack_initialize
+ *              Initializes CLI history stack memory
+ *              and resets its size to zero.
+ *
+ *  \param[in]  HIST_STACK *histStack
+ *  
+ *  \return     STACK_RET_CODE
+ */
 STACK_RET_CODE stack_initialize(HIST_STACK *histStack)
 {
 	/* Catch Null pointer Error */
@@ -31,6 +51,15 @@ STACK_RET_CODE stack_initialize(HIST_STACK *histStack)
 	return STACK_SUCCESS;
 }
 
+/**
+ *  \brief      stack_push
+ *              Pushs and entry into history
+ *              stack.
+ *
+ *  \param[in]  HIST_STACK *histStack, char *entry
+ *  
+ *  \return     STACK_RET_CODE
+ */
 STACK_RET_CODE stack_push(HIST_STACK *histStack, char *entry)
 {
 	int index = 0;
@@ -40,14 +69,14 @@ STACK_RET_CODE stack_push(HIST_STACK *histStack, char *entry)
 	{
 		return STACK_NULL_ERR;
 	}
-
+#ifdef CHK_STACK_DUPENTRY
 	/* Check if element exists in stack */
 	if(checkIfElementExists(histStack, entry) == STACK_SUCCESS)
 	{
 		/* Skip this entry */
 		return STACK_SUCCESS;
 	}
-
+#endif
 	/* Skip entry if length is zero */
 	if(mystrlen(entry) == 0)
 	{
@@ -73,9 +102,17 @@ STACK_RET_CODE stack_push(HIST_STACK *histStack, char *entry)
 	return STACK_SUCCESS;
 }
 
+/**
+ *  \brief      stack_pop_up
+ *              Pops and entry from history
+ *              stack buffer from bottom up.
+ *
+ *  \param[in]  HIST_STACK *histStack, char *entry
+ *  
+ *  \return     STACK_RET_CODE
+ */
 STACK_RET_CODE stack_pop_up(HIST_STACK *histStack, char *entry)
 {
-
 	int prevaccessIndex = histStack->accessIndex;
 	if(histStack->stackSize == 0)
 	{
@@ -99,6 +136,15 @@ STACK_RET_CODE stack_pop_up(HIST_STACK *histStack, char *entry)
 	return STACK_UNDERFLOW;
 }
 
+/**
+ *  \brief      stack_pop_down
+ *              Pops entry from history stack
+ *              from bottom down.
+ *
+ *  \param[in]  HIST_STACK *histStack, char *entry
+ *  
+ *  \return     STACK_RET_CODE
+ */
 STACK_RET_CODE stack_pop_down(HIST_STACK *histStack, char *entry)
 {
 	int prevaccessIndex = histStack->accessIndex;
@@ -128,17 +174,17 @@ STACK_RET_CODE stack_pop_down(HIST_STACK *histStack, char *entry)
 	return STACK_UNDERFLOW;
 }
 
-
-/*
- *	Name		:	checkIfElementExists
- *	Description	:	Checks the history stack for a given entry
- *					
+/**
+ *  \brief      checkIfElementExists
+ *              Checks if an entry is already present in
+ *              stack
  *
- *	In			: 	HIST_STACK *histStack, char *entry
- *	Return		:	STACK_RET_CODE
+ *  \param[in]  HIST_STACK *histStack, char *entry
+ *  
+ *  \return     STACK_RET_CODE
  */
- STACK_RET_CODE checkIfElementExists(HIST_STACK *histStack, char *entry)
- {
+STACK_RET_CODE checkIfElementExists(HIST_STACK *histStack, char *entry)
+{
  	int iVal;
 
  	for(iVal = 0; iVal < histStack->stackSize; iVal++)
@@ -151,4 +197,5 @@ STACK_RET_CODE stack_pop_down(HIST_STACK *histStack, char *entry)
  	}
 
  	return STACK_FAILURE;
- }
+}
+

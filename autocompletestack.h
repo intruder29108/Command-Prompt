@@ -1,33 +1,42 @@
-/*
- *	autocompletestack.h
+/**
+ *  \file          autocompletestack.h
+ *  
+ *  \brief         Implements Data Structures and macros
+ *                 to implement auto-complete feature.
  *
- *	Author		: Antony Clince Alex
- *	Date		: 15 October 2013
- *	Description :
- *					Structures, Macros for implementing autocomplete stack
+ *  Author         Antony Clince Alex
+ *  Date           15 October 2013
+ *  Copyright(c) 2013 GPL. All Rights Reserved.
  */
+#ifndef AUTOCOMPLETESTACK_H
+#define AUTOCOMPLETESTACK_H
 
- #ifndef AUTOCOMPLETESTACK_H
- #define AUTOCOMPLETESTACK_H
+/***** Standard includes goes here *****/
 
- /* Macros goes here */
- #define MAX_NUM_MATCHES	20
- #define MAX_MATCH_SIZE		20
+/***** Project includes goes here *****/
 
- /* Typedefs goes here */
- typedef enum {AUTOCOMPL_NOHITS, AUTOCOMPL_NULL_ERR, AUTOCOMPL_ERR, AUTOCOMPL_SUCCESS} AUTOCOMPL_RET_CODE;
- typedef enum {AUTO_IDLE, AUTO_ACTIVE} AUTOCOMPL_STATE;
- typedef struct
- {
- 	char matchList[MAX_NUM_MATCHES][MAX_MATCH_SIZE];			/**< Can hold max 20 matches each of 20 characters long */
- 	int  matchIndex;										/**< Points to next location in match list */
- 	int  totalHits;											/**< Total number of hits */
- 	AUTOCOMPL_STATE autoComplState;							/**< Tracks the state of AutoComplete Stack */
- }AUTOCOMPL_STRUCT;
+/***** Macros goes here *****/
+#define MAX_NUM_MATCHES		20
+#define MAX_MATCH_SIZE		20
 
- /* Forward Declarations */
- AUTOCOMPL_RET_CODE initializeAutoCompl(AUTOCOMPL_STRUCT *);
- AUTOCOMPL_RET_CODE buildMatchList(AUTOCOMPL_STRUCT *, char *, CMD_TABLE *, int );
- AUTOCOMPL_RET_CODE findMatch(AUTOCOMPL_STRUCT *, char *, CMD_TABLE *, int);
+/***** Typedefs and Enums goes here *****/
+typedef enum {AUTOCOMPL_NOHITS, AUTOCOMPL_NULL_ERR, AUTOCOMPL_ERR, AUTOCOMPL_SUCCESS} AUTOCOMPL_RET_CODE;
+typedef enum {AUTO_IDLE, AUTO_ACTIVE} AUTOCOMPL_STATE;
+typedef struct
+{
+	char matchList[MAX_NUM_MATCHES][MAX_MATCH_SIZE];		/* Buffer to hold matched entires */	
+	int  matchIndex;										/* Points to next location in match list */
+	int  totalHits;											/* Total number of hits */
+	AUTOCOMPL_STATE autoComplState;							/* Tracks the state of AutoComplete Stack */
+}AUTOCOMPL_STRUCT;
 
- #endif
+/***** Global Variables *****/
+
+/***** Extern Variables *****/
+
+/***** Function Declarations *****/
+AUTOCOMPL_RET_CODE initializeAutoCompl(AUTOCOMPL_STRUCT *autoComplStruct);
+AUTOCOMPL_RET_CODE buildMatchList(AUTOCOMPL_STRUCT *autoComplStruct, char *searchStr, CMD_TABLE *cmdTable, int cmdTableSize);
+AUTOCOMPL_RET_CODE findMatch(AUTOCOMPL_STRUCT *autoComplStruct, char *searchStr, CMD_TABLE *cmdTable, int cmdTableSize);
+
+#endif
