@@ -1,5 +1,4 @@
-all: Prompt
-
-		gcc main.o cli.o historystack.o autocompletestack.o utils.o ioroutines.o -o Prompt
+all:
+    gcc main.c cli.c historystack.c autocompletestack.c utils.c ioroutines.c -o Prompt
 clean:
-	rm -rf *.o Prompt
+    rm -rf *.o Prompt

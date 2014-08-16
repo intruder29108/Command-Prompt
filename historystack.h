@@ -16,20 +16,20 @@
 /***** Project includes goes here *****/
 
 /***** Macros goes here *****/
-#define STACK_HEAD				0
-#define MAX_STACK_SIZE			5
-#define MAX_STACK_BUFF_SIZE		40
-#define IS_STACK_EMPTY(stack)	((stack).stackSize == 0 ? TRUE : FALSE)
+#define STACK_HEAD              0
+#define MAX_STACK_SIZE          5
+#define MAX_STACK_BUFF_SIZE     40
+#define IS_STACK_EMPTY(stack)   ((stack).stackSize == 0 ? TRUE : FALSE)
 
 /***** Typedefs and Enums goes here *****/
 typedef enum {STACK_IDLE, STACK_UP, STACK_DOWN} STACK_POP_STATE;
 
 typedef struct
 {
-	char stackBuffer[MAX_STACK_SIZE][MAX_STACK_BUFF_SIZE];
-	int  stackSize;
-	int  accessIndex;
-	STACK_POP_STATE	stack_pop_state;
+    char stackBuffer[MAX_STACK_SIZE][MAX_STACK_BUFF_SIZE];
+    int  stackSize;
+    int  accessIndex;
+    STACK_POP_STATE stack_pop_state;
 } HIST_STACK;
 
 typedef enum {STACK_SUCCESS,  STACK_FAILURE, STACK_UNDERFLOW, STACK_OVERFLOW, STACK_ERROR, STACK_NULL_ERR} STACK_RET_CODE;

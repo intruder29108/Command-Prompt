@@ -47,12 +47,12 @@ int mystrlen(char *str)
 {
     int len = 0;
 
-	while(str[len] != EOS)
-	{
-	   len++;
-	}
+    while(str[len] != EOS)
+    {
+       len++;
+    }
 
-	return len;
+    return len;
 }
 
 /**

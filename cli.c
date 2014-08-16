@@ -29,13 +29,13 @@
 /***** Global Variables *****/
 /* Command Table Definition */
 CMD_TABLE cmdTable[] = {
-	{"help",	help ,		0,	"help"},
-	{"echo",	echo,		1,	"echo <string>"},
-	{"add",		add ,		2,	"add  <num1> <num2>"},
+    {"help",    help ,      0,  "help"},
+    {"echo",    echo,       1,  "echo <string>"},
+    {"add",     add ,       2,  "add  <num1> <num2>"},
 #ifdef USE_HIST_STACK
-	{"history", history,	0,  "history"},
+    {"history", history,    0,  "history"},
 #endif
-	{"exit",	myexit, 	0,	"exit"}
+    {"exit",    myexit,     0,  "exit"}
 };
 /* Global Message Structure */
 PMSG g_pmsg;
@@ -70,19 +70,19 @@ RET_CODE convertArgumentsIntoInteger(int nArgs);
  */
 RET_CODE CLILoop(void)
 {
- 	/* Set the SMHandler to Init */
-	static pFuncPtr SMHandler = (pFuncPtr)InitState;
+    /* Set the SMHandler to Init */
+    static pFuncPtr SMHandler = (pFuncPtr)InitState;
 
- 	/* Loop the state machine */
-	SMHandler = (pFuncPtr)SMHandler((void *)&g_pmsg);
+    /* Loop the state machine */
+    SMHandler = (pFuncPtr)SMHandler((void *)&g_pmsg);
 
-	if(SMHandler == NULL)
-	{
- 		/* Exit CLI with Error */
-		return EXIT_CODE;
-	}
+    if(SMHandler == NULL)
+    {
+        /* Exit CLI with Error */
+        return EXIT_CODE;
+    }
 
-	return SUCCESS;
+    return SUCCESS;
 }
 
 /**

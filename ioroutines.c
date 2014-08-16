@@ -33,15 +33,15 @@
  */
 char custom_ioread()
 {
-	char ch;
-	/* Change to platform specific routine */
+    char ch;
+    /* Change to platform specific routine */
 #ifdef USE_GETCH
-	ch = getch();
+    ch = getch();
 #else
-	ch = getchar();
+    ch = getchar();
 #endif
 
-	return ch;
+    return ch;
 }
 
 /**
@@ -55,7 +55,7 @@ char custom_ioread()
  */
 void custom_iowrite(char ch)
 {
-	/* Change to platform specific routine */
-	putchar(ch);
-	return;
+    /* Change to platform specific routine */
+    putchar(ch);
+    return;
 }

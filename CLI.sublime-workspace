@@ -1,0 +1,972 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"MSG_P",
+				"MSG_PRINT"
+			],
+			[
+				"mypri",
+				"myprintstr"
+			],
+			[
+				"MSG",
+				"MSG_PRINT"
+			],
+			[
+				"conver",
+				"convertArgumentsIntoInteger"
+			],
+			[
+				"AUTO",
+				"USE_AUTOCOMPL_STACK"
+			],
+			[
+				"histo",
+				"historystack"
+			],
+			[
+				"cmdTabe",
+				"cmdTableSize"
+			],
+			[
+				"search",
+				"searchStr"
+			],
+			[
+				"disable",
+				"disableEchoCanonMode"
+			],
+			[
+				"if",
+				"ifdef"
+			],
+			[
+				"restore",
+				"restoreTerminalMode"
+			],
+			[
+				"new",
+				"newSettings"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "ioroutines.c",
+			"settings":
+			{
+				"buffer_size": 1078,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "utils.c",
+			"settings":
+			{
+				"buffer_size": 6137,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "utils.h",
+			"settings":
+			{
+				"buffer_size": 3507,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "historystack.h",
+			"settings":
+			{
+				"buffer_size": 1355,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "historystack.c",
+			"settings":
+			{
+				"buffer_size": 4316,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "autocompletestack.h",
+			"settings":
+			{
+				"buffer_size": 1486,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "autocompletestack.c",
+			"settings":
+			{
+				"buffer_size": 3581,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "common.h",
+			"settings":
+			{
+				"buffer_size": 1035,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ioroutines.h",
+			"settings":
+			{
+				"buffer_size": 613,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "cli.h",
+			"settings":
+			{
+				"buffer_size": 1607,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "cli.c",
+			"settings":
+			{
+				"buffer_size": 16896,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 115,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.c",
+			"settings":
+			{
+				"buffer_size": 3951,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 201.0,
+		"selected_items":
+		[
+			[
+				"save",
+				"Project: Save As"
+			],
+			[
+				"sva",
+				"File: Save All"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"convert",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"pro",
+				"Project: Add Folder"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"inde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"proj",
+				"Project: Add Folder"
+			],
+			[
+				"toogle",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"sidebar",
+				"View: Toggle Side Bar"
+			],
+			[
+				"",
+				"Package Control: Add Repository"
+			],
+			[
+				"snipe",
+				"Snippet: main()"
+			],
+			[
+				"if",
+				"Snippet: If Condition"
+			],
+			[
+				"for",
+				"Snippet: For Loop"
+			],
+			[
+				"printf",
+				"Snippet: printf …"
+			],
+			[
+				"frpint",
+				"Snippet: fprintf …"
+			],
+			[
+				"syntax: C",
+				"Set Syntax: C"
+			],
+			[
+				"sni",
+				"Set Syntax: Makefile"
+			],
+			[
+				"si",
+				"Snippet: class BlankSlate .. initialize .. end"
+			],
+			[
+				"se",
+				"Set Syntax: Ruby"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 174.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read()) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/alisha/git/Command-Prompt/.gitignore",
+		"/home/alisha/git/Command-Prompt/LICENSE",
+		"/home/alisha/git/Command-Prompt/Makefile",
+		"/home/alisha/git/Command-Prompt/Prompt",
+		"/home/alisha/git/Command-Prompt/README.md",
+		"/home/alisha/MicoblazeCLI/utils.c",
+		"/home/alisha/git/Command-Prompt/utils.c",
+		"/home/alisha/git/Command-Prompt/cli.c",
+		"/home/alisha/git/Command-Prompt/autocompletestack.c",
+		"/home/alisha/git/Command-Prompt/main.c",
+		"/home/alisha/git/Command-Prompt/test.c",
+		"/home/alisha/git/Command-Prompt/historystack.h",
+		"/home/alisha/git/Command-Prompt/historystack.c",
+		"/home/alisha/git/Command-Prompt/common.h",
+		"/home/alisha/git/Command-Prompt/cli.h",
+		"/home/alisha/git/Command-Prompt/autocompletestack.h",
+		"/home/alisha/git/Command-Prompt/utils.h",
+		"/home/alisha/.config/sublime-text-3/Packages/User/C/FileHeader.sublime-snippet",
+		"/home/alisha/.config/sublime-text-3/Packages/User/C/FileDefinition.sublime-snippet",
+		"/home/alisha/Downloads/Command-Prompt-master/autocompletestack.c",
+		"/media/Storage_/Development/C/DS/Set/set.c",
+		"/media/Storage_/Development/C/DS/LinkedList/LinkedList.h",
+		"/media/Storage_/Development/C/DS/Set/set.h",
+		"/media/Storage_/Development/C/DS/CircularList/clist.c",
+		"/media/Storage_/Development/C/DS/Set/Set",
+		"/media/Storage_/Development/C/DS/CircularList/cirular_list.sublime-project",
+		"/media/Storage_/Development/C/DS/CircularList/Makefile",
+		"/media/Storage_/Development/C/DS/CircularList/clist.h",
+		"/media/Storage_/Development/C/DS/CircularList/testApp.c",
+		"/media/Storage/Development/C/DS/Set/set.c",
+		"/media/Storage/Development/C/DS/CircularList/clist.c",
+		"/media/Storage/Development/C/DS/Set/set.h",
+		"/media/Storage/Development/C/DS/Set/testApp.c",
+		"/media/Storage/Development/C/DS/Set/Makefile",
+		"/home/alisha/compat_diff.txt"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/home/alisha/git/Command-Prompt"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"waters",
+			"myprintstr",
+			"custom_printstring",
+			"_polled",
+			"(u8 *)",
+			"custom_printstring",
+			"*",
+			"\\n",
+			"'\\n'",
+			"'\\b'",
+			"printf",
+			"set",
+			"Set",
+			"set",
+			"Set",
+			"set",
+			"Set",
+			"set",
+			"Set",
+			"set",
+			"Set",
+			"set",
+			"			=",
+			"NULL"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"custom_printstring"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "ioroutines.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1078,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								362,
+								362
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 594.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "utils.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6137,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2871,
+								2871
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2638.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "utils.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3507,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								375,
+								375
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "historystack.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1355,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								524,
+								524
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "historystack.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4316,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3,
+								3
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "autocompletestack.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1486,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1086,
+								1086
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "autocompletestack.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3581,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2717,
+								2717
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1782.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "common.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1035,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								405,
+								405
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "ioroutines.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 613,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								559,
+								559
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "cli.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1607,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1566,
+								1566
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "cli.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16896,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								441,
+								441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 115,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								88,
+								88
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3951,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1563,
+								1563
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1242.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 142.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "CLI.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"u",
+				"utils.h"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"cli",
+				"cli.c"
+			],
+			[
+				"clic",
+				"cli.c"
+			],
+			[
+				"auto",
+				"autocompletestack.h"
+			],
+			[
+				"his",
+				"historystack.h"
+			],
+			[
+				"cli.h",
+				"cli.h"
+			],
+			[
+				"main",
+				"main.c"
+			],
+			[
+				"mai",
+				"main.c"
+			],
+			[
+				"cli.c",
+				"cli.c"
+			],
+			[
+				"util",
+				"utils.c"
+			],
+			[
+				"uti",
+				"utils.h"
+			],
+			[
+				"com",
+				"common.h"
+			],
+			[
+				"ioro",
+				"ioroutines.h"
+			],
+			[
+				"aut",
+				"autocompletestack.c"
+			],
+			[
+				"a",
+				"autocompletestack.h"
+			],
+			[
+				"",
+				"historystack.h"
+			],
+			[
+				"ut",
+				"utils.c"
+			],
+			[
+				"io",
+				"ioroutines.h"
+			],
+			[
+				"xm",
+				"xmodem.h"
+			],
+			[
+				"confi",
+				"configList.h"
+			],
+			[
+				"fim",
+				"FirmwareDownloadManager.c"
+			],
+			[
+				"firm",
+				"FirmwareDownloadManager.h"
+			],
+			[
+				"d",
+				"deferLib.h"
+			],
+			[
+				"iorou",
+				"ioroutines.c"
+			],
+			[
+				"ma",
+				"Makefile"
+			],
+			[
+				"link",
+				"LinkedList/LinkedList.h"
+			],
+			[
+				"set.h",
+				"Set/set.h"
+			],
+			[
+				"set.c",
+				"Set/set.c"
+			],
+			[
+				"set",
+				"Set/Set"
+			],
+			[
+				"clist.c",
+				"clist.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 201.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
