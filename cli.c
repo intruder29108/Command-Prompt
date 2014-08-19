@@ -35,6 +35,7 @@ CMD_TABLE cmdTable[] = {
 #ifdef USE_HIST_STACK
     {"history", history,    0,  "history"},
 #endif
+    {"clear",   clear,      0,  "clear"},
     {"exit",    myexit,     0,  "exit"}
 };
 /* Global Message Structure */
@@ -585,6 +586,22 @@ RET_CODE history(PMSG *pmsg)
         custom_printstring(g_histstack.stackBuffer[iVal]);
         custom_printstring(LINE_FEED);
     }
+
+    return SUCCESS;
+}
+
+/**
+ *  \brief      clear
+ *              Clears the terminal display.
+ *
+ *
+ *  \param[in]  PMSG *pmsg
+ *
+ *  \return     RET_CODE
+ */
+RET_CODE clear(PMSG *pmsg)
+{
+    clearscreen();
 
     return SUCCESS;
 }

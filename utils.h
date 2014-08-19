@@ -80,6 +80,8 @@
 typedef enum {SUCCESS, CMD_FAIL, CMD_FAILQUIET,  NULL_ERR, BASE_ERR, PARSE_ERR, PARAM_ERR, PARAM1_ERR, PARAM2_ERR, PARAM3_ERR, PARAM4_ERR, EXIT_CODE} RET_CODE;
 
 /***** Forward declarations *****/
+/* Miscellaneous functions */
+void clearscreen();
 /* String functions */
 int mystrlen(char *);
 int mystrcmp(char *, char *);

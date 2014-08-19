@@ -31,9 +31,27 @@ char g_iVal = 0;
 
 /***** Function Definitions *****/
 
+/**
+ *  \brief         clearscreen
+ *                 Clears the terminal screen using ANSI VT100
+ *                 character sequence.
+ *
+ *  \param[in]     void
+ *
+ *  \return        void
+ */
+void clearscreen(void)
+{
+    char clearScreenSeq[] = {0x1B, '[', '2', 'J', 0x00};
+    char cursorHomeSeq[] = {0x1B, '[', 'H'};
+
+    custom_printstring(clearScreenSeq);
+    custom_printstring(cursorHomeSeq);
+
+    return;
+}
+
 /* String Function Definition */
-
-
 /**
  *  \brief      mystrlen
  *              Custom string length function

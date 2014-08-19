@@ -13,9 +13,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef USE_TERMIOS
 #include <termios.h>
-#endif
+ 
 /***** Project includes goes here *****/
 #include "common.h"
 #include "utils.h"

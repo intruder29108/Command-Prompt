@@ -60,6 +60,8 @@ RET_CODE add(PMSG *);
 #ifdef USE_HIST_STACK
 RET_CODE history(PMSG *);
 #endif
+RET_CODE clear(PMSG *);
 RET_CODE myexit(PMSG *);
+
 
 #endif
